@@ -1,0 +1,76 @@
+@startuml
+' --- スタイル設定（モダン・クリーン） ---
+skinparam backgroundColor #FFFFFF
+skinparam handwritten false
+skinparam shadowing false
+skinparam packageStyle rectangle
+skinparam defaultFontName "Helvetica Neue", "Arial", "Hiragino Kaku Gothic ProN", sans-serif
+
+' 線のスタイル
+skinparam roundcorner 8
+skinparam arrowColor #64748B
+skinparam arrowThickness 1.5
+
+' ノードの基本スタイル
+skinparam activity {
+  BackgroundColor #F8FAFC
+  BorderColor #CBD5E1
+  FontColor #1E293B
+  FontSize 13
+}
+
+' 開始・終了ノード
+skinparam startEnd {
+  BackgroundColor #64748B
+  BorderColor #475569
+  FontColor #FFFFFF
+}
+
+' パーティションのスタイル
+skinparam partition {
+  BorderColor #E2E8F0
+  FontColor #475569
+  FontSize 14
+  FontStyle bold
+}
+
+' --- フロー定義 ---
+title Active Recall - ユーザーフロー（日本語版）
+
+start
+
+:サインアップ / ログイン;
+:ホーム画面;
+
+partition "モバイルアプリ（React Native）" #F1F5F9 {
+  
+  switch (ユーザーの操作選択)
+  case ( 問題生成 )
+    partition "問題生成（Question Generator）" #FFFFFF {
+      :テキスト入力 / ノート貼り付け / 画像入力;
+      :カード内容を確認して保存;
+    }
+  case ( 学習開始 )
+    partition "学習モード（Study Mode）" #FFFFFF {
+      :カードを1枚ずつ表示;
+      :想起 → 解答表示 → 評価\n（もう一度 / 難しい / 良い）;
+      :次回復習日の更新;
+      :セッション完了画面を表示;
+    }
+  case ( 進捗確認 )
+    partition "進捗（Progress）" #FFFFFF {
+      :進捗ダッシュボードを表示;
+      :連続学習カレンダー;
+      :トピック習熟度バー;
+    }
+  endswitch
+  
+}
+
+partition "バックエンド（Next.js + MongoDB）" #F1F5F9 {
+  :ユーザーデータ同期;
+  :カード / レビュー履歴 / 連続記録を保存;
+}
+
+stop
+@enduml
